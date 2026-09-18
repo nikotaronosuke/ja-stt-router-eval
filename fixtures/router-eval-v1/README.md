@@ -85,8 +85,34 @@ expected_ids / acceptable_ids / should_abstain / notes
 - **should_abstain** — 何も出さないことが正解か。
 - **notes** — なぜこのラベルなのかを日本語で1文。全問必須で、テストが空を弾きます。
 
-ラベルは人手で付けました。モデルに大量生成させてはいません。
-曖昧すぎて正解を決められない発話は ambiguous へ移すか、採用していません。
+### 作成の経緯（provenance）
+
+この評価セットは、面接専用だった旧評価セットの構造（10 カテゴリとその件数、5 分類、
+`expected_ids` / `acceptable_ids` / `should_abstain` / `notes` というラベル項目）を、
+AI モデル（Claude、Claude Code 経由）が架空の市民センター案内デスクという別ドメインへ
+移植して作成したものです。発話・候補・関連語・ラベル・notes はすべてモデルが生成し、
+上のルール（曖昧すぎて正解を決められない発話は ambiguous へ移すか採用しない、
+`should_abstain` と expected を矛盾させない、など）もその生成時にモデルが適用しました。
+人が全 242 問を 1 問ずつ確認・承認する作業は行っていません。
+
+機械的に検証した範囲は次のとおりです（`scripts/validate_router_fixture.py`、
+`tests/router/test_dataset.py`、`tests/router/test_evaluate.py`）。
+
+- id の一意性、カテゴリ名とカテゴリ別の件数、notes が空でないこと
+- expected / acceptable の候補 id が存在し、互いに重複しないこと
+- `should_abstain` が真なら expected が空、偽なら expected が 1 件以上あること
+- follow_up / very_short は `previous_question` を持つか、abstain が正解であること
+- multiple は expected が 2 件以上、none / distractor / scope_trap / ambiguous は全問 abstain が正解であること
+- 16 候補すべてが expected または acceptable のどこかで参照されること
+- keyword baseline の形：direct は expected 候補 1 件の関連語だけを含み全問 `expected_hit` になる、
+  none は関連語を含まず全問 `correct_abstain` になる、distractor の少なくとも 1 問は関連語を含む
+- hosted provider へ送る payload に候補の本文・ラベル・notes・禁止パターンが混入しないこと
+  （`router_eval/precheck.py`）
+
+各ラベルが意味的に正しいか（本当にその候補が該当するか、abstain が妥当か）は機械検証の対象外で、
+人による全件レビューも行っていません。`questions.json` 冒頭の `note` にある「正解ラベルは人手で付け」
+という文言は作成時のもので実態と異なります。封印済み fixture を書き換えると別の dataset になるため
+ファイルはそのままにし、作成経緯についてはこの文書を正とします。
 
 ### should_abstain が真なのに acceptable がある場合
 
