@@ -1,26 +1,29 @@
+English | [日本語](README.ja.md)
+
 # Japanese STT & LLM Router Evaluation
 
-Windows 上で、日本語音声認識（STT）と「短い発話 → 限定された候補ID」のルーティングを、
-再現可能な条件で評価するための実験用リポジトリです。
+An experimental repository for evaluating Japanese speech recognition (STT) and
+"short utterance → one of a closed set of candidate ids" routing on Windows under
+reproducible conditions.
 
 ## What this evaluates
 
 ### Speech recognition
 
-- CER（NFKC・casefold・空白と句読点の除去後の文字誤り率）
-- keyword recovery（事前に固定した重要語の回収率。表記の別名は明示したものだけを認める）
-- first-partial latency（最初の非 final が届くまで）と keyword-end latency（人が確認した語の言い終わりから最初の表示まで）
-- end-to-end latency、partial の修正回数、final の安定時刻
-- resource usage（ホスト／WSL worker／GPU 全体の CPU・RAM・VRAM、初期化時間、Windows のコミット余裕）
-- 経路：WASAPI loopback（無音 render 維持の診断を含む）、直接マイク、会議アプリの相手側音声
+- CER (character error rate after NFKC, casefold, and removal of whitespace and punctuation)
+- keyword recovery (recall of keywords fixed in advance; only explicitly listed spelling aliases are accepted)
+- first-partial latency (until the first non-final result arrives) and keyword-end latency (from the human-confirmed end of the spoken keyword to its first display)
+- end-to-end latency, number of partial revisions, and the time at which the final text became stable
+- resource usage (CPU, RAM and VRAM of the host, the WSL worker and the whole GPU; initialization time; Windows commit headroom)
+- paths: WASAPI loopback (including the silent-render diagnostic), a direct microphone, and the far side of a meeting application
 
 ### Routing
 
 - expected hit / acceptable hit
-- wrong display（主要指標。accuracy に混ぜない）
+- wrong display (the primary figure; never folded into an accuracy number)
 - correct abstain / missed but safe
-- category breakdown（10カテゴリ、242問、16候補）
-- latency / tokens / cost（hosted provider）
+- category breakdown (10 categories, 242 questions, 16 candidates)
+- latency / tokens / cost (hosted provider)
 
 ## Design principles
 
