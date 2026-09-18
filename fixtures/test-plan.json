@@ -1,0 +1,624 @@
+{
+  "schema_version": 1,
+  "dataset_role": "public_neutral_examples",
+  "tests": [
+    {
+      "test_id": "q01",
+      "reference_text": "今日の天気予報を確認してください。",
+      "keywords": [
+        "天気予報"
+      ],
+      "proper_nouns": [],
+      "decision_keywords": [
+        "天気予報"
+      ],
+      "condition": "normal",
+      "audio_kind": "human",
+      "audio": "audio/q01.wav"
+    },
+    {
+      "test_id": "q02",
+      "reference_text": "図書館の開館時間を確認してください。",
+      "keywords": [
+        "図書館"
+      ],
+      "proper_nouns": [],
+      "decision_keywords": [
+        "図書館"
+      ],
+      "condition": "normal",
+      "audio_kind": "human",
+      "audio": "audio/q02.wav"
+    },
+    {
+      "test_id": "q03",
+      "reference_text": "明日の気温は何度でしょうか。",
+      "keywords": [
+        "気温"
+      ],
+      "proper_nouns": [],
+      "decision_keywords": [
+        "気温"
+      ],
+      "condition": "normal",
+      "audio_kind": "human",
+      "audio": "audio/q03.wav"
+    },
+    {
+      "test_id": "q04",
+      "reference_text": "公園の入口は北側にあります。",
+      "keywords": [
+        "公園",
+        "入口"
+      ],
+      "proper_nouns": [],
+      "decision_keywords": [
+        "公園",
+        "入口"
+      ],
+      "condition": "normal",
+      "audio_kind": "human",
+      "audio": "audio/q04.wav"
+    },
+    {
+      "test_id": "q05",
+      "reference_text": "この棚には青い箱が三つあります。",
+      "keywords": [
+        "青い箱"
+      ],
+      "proper_nouns": [],
+      "decision_keywords": [
+        "青い箱"
+      ],
+      "condition": "normal",
+      "audio_kind": "human",
+      "audio": "audio/q05.wav"
+    },
+    {
+      "test_id": "q06",
+      "reference_text": "在庫確認は午後に行います。",
+      "keywords": [
+        "在庫確認"
+      ],
+      "proper_nouns": [],
+      "decision_keywords": [
+        "在庫確認"
+      ],
+      "condition": "normal",
+      "audio_kind": "human",
+      "audio": "audio/q06.wav"
+    },
+    {
+      "test_id": "q07",
+      "reference_text": "荷物は受付の横に置いてください。",
+      "keywords": [
+        "荷物",
+        "受付"
+      ],
+      "proper_nouns": [],
+      "decision_keywords": [
+        "荷物",
+        "受付"
+      ],
+      "condition": "normal",
+      "audio_kind": "human",
+      "audio": "audio/q07.wav"
+    },
+    {
+      "test_id": "q08",
+      "reference_text": "次の電車は十分後に到着します。",
+      "keywords": [
+        "電車",
+        "到着"
+      ],
+      "proper_nouns": [],
+      "decision_keywords": [
+        "電車",
+        "到着"
+      ],
+      "condition": "normal",
+      "audio_kind": "human",
+      "audio": "audio/q08.wav"
+    },
+    {
+      "test_id": "q09",
+      "reference_text": "雨が降る前に窓を閉めてください。",
+      "keywords": [
+        "雨",
+        "窓"
+      ],
+      "proper_nouns": [],
+      "decision_keywords": [
+        "雨",
+        "窓"
+      ],
+      "condition": "normal",
+      "audio_kind": "human",
+      "audio": "audio/q09.wav"
+    },
+    {
+      "test_id": "q10",
+      "reference_text": "明るさを少し下げてください。",
+      "keywords": [
+        "明るさ"
+      ],
+      "proper_nouns": [],
+      "decision_keywords": [
+        "明るさ"
+      ],
+      "condition": "normal",
+      "audio_kind": "human",
+      "audio": "audio/q10.wav"
+    },
+    {
+      "test_id": "q11",
+      "reference_text": "音声の聞こえ方を確認します。",
+      "keywords": [
+        "音声"
+      ],
+      "proper_nouns": [],
+      "decision_keywords": [
+        "音声"
+      ],
+      "condition": "normal",
+      "audio_kind": "human",
+      "audio": "audio/q11.wav"
+    },
+    {
+      "test_id": "q12",
+      "reference_text": "机の上に新しい地図があります。",
+      "keywords": [
+        "地図"
+      ],
+      "proper_nouns": [],
+      "decision_keywords": [
+        "地図"
+      ],
+      "condition": "normal",
+      "audio_kind": "human",
+      "audio": "audio/q12.wav"
+    },
+    {
+      "test_id": "q13",
+      "reference_text": "赤いボタンを一度押してください。",
+      "keywords": [
+        "赤いボタン"
+      ],
+      "proper_nouns": [],
+      "decision_keywords": [
+        "赤いボタン"
+      ],
+      "condition": "normal",
+      "audio_kind": "human",
+      "audio": "audio/q13.wav"
+    },
+    {
+      "test_id": "q14",
+      "reference_text": "緑のランプが点灯しています。",
+      "keywords": [
+        "緑",
+        "ランプ"
+      ],
+      "proper_nouns": [],
+      "decision_keywords": [
+        "緑",
+        "ランプ"
+      ],
+      "condition": "normal",
+      "audio_kind": "human",
+      "audio": "audio/q14.wav"
+    },
+    {
+      "test_id": "q15",
+      "reference_text": "時計を一時間進めてください。",
+      "keywords": [
+        "時計"
+      ],
+      "proper_nouns": [],
+      "decision_keywords": [
+        "時計"
+      ],
+      "condition": "normal",
+      "audio_kind": "human",
+      "audio": "audio/q15.wav"
+    },
+    {
+      "test_id": "q16",
+      "reference_text": "箱の重さは二キログラムです。",
+      "keywords": [
+        "重さ"
+      ],
+      "proper_nouns": [],
+      "decision_keywords": [
+        "重さ"
+      ],
+      "condition": "normal",
+      "audio_kind": "human",
+      "audio": "audio/q16.wav"
+    },
+    {
+      "test_id": "q17",
+      "reference_text": "生成AIという語の発音を確認します。",
+      "keywords": [
+        [
+          "生成AI",
+          "生成エーアイ"
+        ]
+      ],
+      "proper_nouns": [
+        [
+          "生成AI",
+          "生成エーアイ"
+        ]
+      ],
+      "decision_keywords": [
+        [
+          "生成AI",
+          "生成エーアイ"
+        ]
+      ],
+      "condition": "normal",
+      "audio_kind": "human",
+      "audio": "audio/q17.wav"
+    },
+    {
+      "test_id": "q18",
+      "reference_text": "AIという略語を読み上げます。",
+      "keywords": [
+        [
+          "AI",
+          "エーアイ"
+        ]
+      ],
+      "proper_nouns": [
+        [
+          "AI",
+          "エーアイ"
+        ]
+      ],
+      "decision_keywords": [
+        [
+          "AI",
+          "エーアイ"
+        ]
+      ],
+      "condition": "normal",
+      "audio_kind": "human",
+      "audio": "audio/q18.wav"
+    },
+    {
+      "test_id": "q19",
+      "reference_text": "ウェブページの文字を大きくします。",
+      "keywords": [
+        "ウェブページ"
+      ],
+      "proper_nouns": [],
+      "decision_keywords": [
+        "ウェブページ"
+      ],
+      "condition": "normal",
+      "audio_kind": "human",
+      "audio": "audio/q19.wav"
+    },
+    {
+      "test_id": "q20",
+      "reference_text": "画面の中央に丸を描きます。",
+      "keywords": [
+        "画面",
+        "中央"
+      ],
+      "proper_nouns": [],
+      "decision_keywords": [
+        "画面",
+        "中央"
+      ],
+      "condition": "normal",
+      "audio_kind": "human",
+      "audio": "audio/q20.wav"
+    },
+    {
+      "test_id": "q21",
+      "reference_text": "WordPressという製品名を読み上げます。",
+      "keywords": [
+        [
+          "WordPress",
+          "ワードプレス"
+        ]
+      ],
+      "proper_nouns": [
+        [
+          "WordPress",
+          "ワードプレス"
+        ]
+      ],
+      "decision_keywords": [
+        [
+          "WordPress",
+          "ワードプレス"
+        ]
+      ],
+      "condition": "normal",
+      "audio_kind": "human",
+      "audio": "audio/q21.wav"
+    },
+    {
+      "test_id": "q22",
+      "reference_text": "SharePointという製品名を読み上げます。",
+      "keywords": [
+        [
+          "SharePoint",
+          "シェアポイント"
+        ]
+      ],
+      "proper_nouns": [
+        [
+          "SharePoint",
+          "シェアポイント"
+        ]
+      ],
+      "decision_keywords": [
+        [
+          "SharePoint",
+          "シェアポイント"
+        ]
+      ],
+      "condition": "normal",
+      "audio_kind": "human",
+      "audio": "audio/q22.wav"
+    },
+    {
+      "test_id": "q23",
+      "reference_text": "信号が青に変わりました。",
+      "keywords": [
+        "信号"
+      ],
+      "proper_nouns": [],
+      "decision_keywords": [
+        "信号"
+      ],
+      "condition": "normal",
+      "audio_kind": "human",
+      "audio": "audio/q23.wav"
+    },
+    {
+      "test_id": "q24",
+      "reference_text": "図書館では静かに話してください。",
+      "keywords": [
+        "図書館"
+      ],
+      "proper_nouns": [],
+      "decision_keywords": [
+        "図書館"
+      ],
+      "condition": "normal",
+      "audio_kind": "human",
+      "audio": "audio/q24.wav"
+    },
+    {
+      "test_id": "q25",
+      "reference_text": "会議室の予約を確認してください。",
+      "keywords": [
+        "会議室",
+        "予約"
+      ],
+      "proper_nouns": [],
+      "decision_keywords": [
+        "会議室",
+        "予約"
+      ],
+      "condition": "normal",
+      "audio_kind": "human",
+      "audio": "audio/q25.wav"
+    },
+    {
+      "test_id": "q26",
+      "reference_text": "本を二冊ずつ並べてください。",
+      "keywords": [
+        "本"
+      ],
+      "proper_nouns": [],
+      "decision_keywords": [
+        "本"
+      ],
+      "condition": "normal",
+      "audio_kind": "human",
+      "audio": "audio/q26.wav"
+    },
+    {
+      "test_id": "q27",
+      "reference_text": "水を半分まで注いでください。",
+      "keywords": [
+        "水"
+      ],
+      "proper_nouns": [],
+      "decision_keywords": [
+        "水"
+      ],
+      "condition": "normal",
+      "audio_kind": "human",
+      "audio": "audio/q27.wav"
+    },
+    {
+      "test_id": "q28",
+      "reference_text": "お湯の温度を測ってください。",
+      "keywords": [
+        "温度"
+      ],
+      "proper_nouns": [],
+      "decision_keywords": [
+        "温度"
+      ],
+      "condition": "normal",
+      "audio_kind": "human",
+      "audio": "audio/q28.wav"
+    },
+    {
+      "test_id": "q29",
+      "reference_text": "風が少し強くなりました。",
+      "keywords": [
+        "風"
+      ],
+      "proper_nouns": [],
+      "decision_keywords": [
+        "風"
+      ],
+      "condition": "normal",
+      "audio_kind": "human",
+      "audio": "audio/q29.wav"
+    },
+    {
+      "test_id": "q30",
+      "reference_text": "地図の縮尺を確認してください。",
+      "keywords": [
+        "縮尺"
+      ],
+      "proper_nouns": [],
+      "decision_keywords": [
+        "縮尺"
+      ],
+      "condition": "normal",
+      "audio_kind": "human",
+      "audio": "audio/q30.wav"
+    },
+    {
+      "test_id": "q31",
+      "reference_text": "鉛筆を三本用意してください。",
+      "keywords": [
+        "鉛筆"
+      ],
+      "proper_nouns": [],
+      "decision_keywords": [
+        "鉛筆"
+      ],
+      "condition": "normal",
+      "audio_kind": "human",
+      "audio": "audio/q31.wav"
+    },
+    {
+      "test_id": "q32",
+      "reference_text": "紙を半分に折ってください。",
+      "keywords": [
+        "紙"
+      ],
+      "proper_nouns": [],
+      "decision_keywords": [
+        "紙"
+      ],
+      "condition": "normal",
+      "audio_kind": "human",
+      "audio": "audio/q32.wav"
+    },
+    {
+      "test_id": "q33",
+      "reference_text": "奥の扉をゆっくり開けてください。",
+      "keywords": [
+        "扉"
+      ],
+      "proper_nouns": [],
+      "decision_keywords": [
+        "扉"
+      ],
+      "condition": "normal",
+      "audio_kind": "human",
+      "audio": "audio/q33.wav"
+    },
+    {
+      "test_id": "q34",
+      "reference_text": "帰る前に照明を消してください。",
+      "keywords": [
+        "照明"
+      ],
+      "proper_nouns": [],
+      "decision_keywords": [
+        "照明"
+      ],
+      "condition": "normal",
+      "audio_kind": "human",
+      "audio": "audio/q34.wav"
+    },
+    {
+      "test_id": "q35",
+      "reference_text": "透明な袋に小物を入れます。",
+      "keywords": [
+        "透明"
+      ],
+      "proper_nouns": [],
+      "decision_keywords": [
+        "透明"
+      ],
+      "condition": "normal",
+      "audio_kind": "human",
+      "audio": "audio/q35.wav"
+    },
+    {
+      "test_id": "q36",
+      "reference_text": "大きい箱を下に置いてください。",
+      "keywords": [
+        "大きい箱"
+      ],
+      "proper_nouns": [],
+      "decision_keywords": [
+        "大きい箱"
+      ],
+      "condition": "normal",
+      "audio_kind": "human",
+      "audio": "audio/q36.wav"
+    },
+    {
+      "test_id": "q37",
+      "reference_text": "合計金額は千円です。",
+      "keywords": [
+        "合計金額"
+      ],
+      "proper_nouns": [],
+      "decision_keywords": [
+        "合計金額"
+      ],
+      "condition": "normal",
+      "audio_kind": "human",
+      "audio": "audio/q37.wav"
+    },
+    {
+      "test_id": "q38",
+      "reference_text": "進み具合は二十五パーセントです。",
+      "keywords": [
+        "二十五パーセント"
+      ],
+      "proper_nouns": [],
+      "decision_keywords": [
+        "二十五パーセント"
+      ],
+      "condition": "normal",
+      "audio_kind": "human",
+      "audio": "audio/q38.wav"
+    },
+    {
+      "test_id": "q39",
+      "reference_text": "最後の行をもう一度読みます。",
+      "keywords": [
+        "最後"
+      ],
+      "proper_nouns": [],
+      "decision_keywords": [
+        "最後"
+      ],
+      "condition": "normal",
+      "audio_kind": "human",
+      "audio": "audio/q39.wav"
+    },
+    {
+      "test_id": "q40",
+      "reference_text": "これで音声テストを終了します。",
+      "keywords": [
+        "音声テスト"
+      ],
+      "proper_nouns": [],
+      "decision_keywords": [
+        "音声テスト"
+      ],
+      "condition": "normal",
+      "audio_kind": "human",
+      "audio": "audio/q40.wav"
+    }
+  ]
+}

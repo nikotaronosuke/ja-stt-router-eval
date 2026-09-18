@@ -1,0 +1,28 @@
+<!doctype html><html lang="ja"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>重要語の言い終わりの確認</title>
+<style>
+:root{font-family:"Yu Gothic UI",sans-serif;color:#edf2fb;background:#10151f}body{max-width:780px;margin:32px auto;padding:0 24px}h1{font-size:26px}p{line-height:1.7}.card{background:#182232;padding:24px;border:1px solid #354155;border-radius:14px;margin:20px 0}button,input{font:inherit;padding:12px;border-radius:8px;border:1px solid #586d89;background:#263449;color:#fff}button{cursor:pointer;margin:6px 8px 6px 0}button.primary{background:#246ce0}button:disabled{opacity:.4;cursor:default}.small{color:#b7c4d8;font-size:14px}#term{font-size:30px;color:#8fc3ff}audio{width:100%}input{width:95px}#status{color:#8ddfb1}details{margin-top:16px}a{color:#9dcbff}
+</style>
+<h1>重要語の「言い終わり」を確認</h1>
+<p>文章の確認が済んだ録音について、短い区間を聞いて計測の基準位置だけ確かめます。録音・外部送信は行いません。</p>
+<div class="card" id="work"><p id="progress"></p><p>今回の重要語：<strong id="term"></strong></p>
+<p>①「区間を聞く」で言葉を確認し、②「終了位置で止めて聞く」で、<strong>その語を言い終えた直後に止まるか</strong>聞いてください。</p>
+<button id="context">▶ 区間を聞く</button><button id="cut">▶ 終了位置で止めて聞く</button>
+<p class="small">途中で切れたら「終了を遅く」、次の言葉まで入ったら「終了を早く」を押し、もう一度聞けます。</p>
+<button id="earlier">終了を0.05秒早く</button><button id="later">終了を0.05秒遅く</button><span id="position"></span>
+<p><button class="primary" id="confirm" disabled>言い終わりを確認して次へ</button><button id="skip">判断が難しいので飛ばす</button></p>
+<details><summary>全文の再生・位置の調整</summary><audio id="player" controls></audio><p id="reference"></p><label>開始 <input id="start" type="number" min="0" step="0.05"></label> <label>終了 <input id="end" type="number" min="0" step="0.05"></label></details>
+</div><p id="status"></p><p class="small">位置の初期値は自動推定です。飛ばしたものを確認済みにはしません。同じ語を複数回話した録音などは対象から除いています。</p>
+<script>
+const $=id=>document.getElementById(id);let all=[],queue=[],i=0,current,heardContext=false,heardCut=false;const player=$('player');let audioContext,buffer,source,playbackSerial=0;
+function stop(){playbackSerial++;if(source){source.stop();source=null}player.pause()}
+function resetHeard(){heardContext=false;heardCut=false;$('confirm').disabled=true}
+function position(){ $('position').textContent=Number($('end').value).toFixed(2)+' 秒'; }
+function show(){stop();buffer=null;resetHeard();current=queue[i];if(!current){$('work').hidden=true;$('status').textContent='この画面の確認は終了です。確認した位置は保存されています。';return}const span=current.timing_draft;$('progress').textContent=`${i+1} / ${queue.length} 件 · 元の録音 ${all.findIndex(t=>t.test_id===current.test_id)+1} 番 · ${current.route}`;$('term').textContent=current.keywords[0];$('reference').textContent=current.reference_text;$('start').value=span.start_s.toFixed(3);$('end').value=span.end_s.toFixed(3);player.src='/audio/'+current.test_id+'.wav';position()}
+async function play(cut){stop();const serial=playbackSerial,a=Number($('start').value),b=Number($('end').value);if(!(b>a&&b<=current.duration_s)){$('status').textContent='開始・終了の位置を調整してください。';return}try{audioContext??=new AudioContext();await audioContext.resume();buffer??=await audioContext.decodeAudioData(await(await fetch(player.src)).arrayBuffer());if(serial!==playbackSerial)return;source=audioContext.createBufferSource();source.buffer=buffer;source.connect(audioContext.destination);source.onended=()=>{if(serial!==playbackSerial)return;source=null;if(cut)heardCut=true;else heardContext=true;$('confirm').disabled=!(heardCut&&heardContext)};const begin=Math.max(0,a-.35),end=Math.min(current.duration_s,cut?b:b+.5);source.start(0,begin,end-begin)}catch(e){$('status').textContent='再生できませんでした。もう一度押してください。'}}
+$('context').onclick=()=>play(false);$('cut').onclick=()=>play(true);
+function move(d){stop();$('end').value=Math.max(Number($('start').value)+.01,Math.min(current.duration_s,Number($('end').value)+d)).toFixed(3);heardCut=false;$('confirm').disabled=true;position()}
+$('earlier').onclick=()=>move(-.05);$('later').onclick=()=>move(.05);$('end').onchange=()=>{resetHeard();position()};$('start').onchange=resetHeard;
+$('skip').onclick=()=>{i++;show()};$('confirm').onclick=async()=>{if(!(heardContext&&heardCut))return;$('confirm').disabled=true;player.pause();try{const r=await fetch('/api/review-timing',{method:'POST',headers:{'Content-Type':'application/json','X-Study-Request':'1'},body:JSON.stringify({test_id:current.test_id,start_s:Number($('start').value),end_s:Number($('end').value),confirmed:true})});if(!r.ok)throw Error();$('status').textContent='保存しました';i++;show()}catch(e){$('status').textContent='保存できませんでした。位置を確認して再度押してください。';$('confirm').disabled=false}};
+fetch('/api/state').then(r=>r.json()).then(s=>{all=s.takes;queue=all.filter(t=>t.timing_draft&&!t.keyword_annotation.spans.some(a=>a.review==='human_verified'));show()}).catch(()=>{$('status').textContent='読み込みに失敗しました。'});
+</script></html>

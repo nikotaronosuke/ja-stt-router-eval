@@ -1,0 +1,3 @@
+# First install matching CUDA wheels using scripts/setup-wsl.sh.
+nemo-toolkit[asr]==3.0.0
+psutil==7.2.2

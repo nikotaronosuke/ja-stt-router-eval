@@ -1,0 +1,52 @@
+<!doctype html><html lang="ja"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>音声試験 — 録音と参照文の確認</title>
+<style>
+:root{font-family:"Yu Gothic UI",sans-serif;color:#e5e9f0;background:#10151f}body{max-width:980px;margin:28px auto;padding:0 24px}h1{font-size:28px}h2{font-size:21px}p{line-height:1.7;color:#bdc8d8}.card{border:1px solid #354155;background:#182232;border-radius:14px;padding:22px;margin:18px 0}button,select,input,textarea{font:inherit;border:1px solid #586d89;border-radius:7px;padding:10px;color:#ebf3ff;background:#263449}button{cursor:pointer;margin:6px 6px 6px 0}button.primary{background:#246ce0}button:disabled{opacity:.38;cursor:default}select{max-width:100%}textarea{width:96%;min-height:80px}label{display:block;margin:10px 0}.small{font-size:13px;color:#a7b4c6}.guide{font-size:21px;min-height:72px;line-height:1.6;color:#fff}.status{color:#89d9ab;min-height:28px}audio{width:100%}canvas{width:100%;height:140px;cursor:crosshair;background:#111a28}input[type=number]{width:95px}.row{display:flex;gap:12px;flex-wrap:wrap}.badge{color:#8fc3ff}#error{color:#ffb9a8}details{margin-top:16px}a{color:#9dcbff}
+</style>
+<h1>音声試験 <span class="badge">録音と参照文の確認</span></h1>
+<p>テスト音声をこのPC内に保存します。録音は「録音開始」を押したときだけ始まり、最大30秒で止まります。外部送信はありません。</p>
+<div class="card"><h2>1. 自分の言葉で、ガイドに沿った短い発話をする</h2>
+<p class="small">製品名などは公開用の汎用語です。同じ話者で全件を録ると比較できます。最初は録音だけ進めて構いません。</p>
+<div class="row"><select id="prompt"></select><select id="route"><option value="direct_mic">直接マイク</option><option value="meet_loopback">Meet相手側音声</option><option value="zoom_loopback">Zoom相手側音声</option></select></div>
+<p id="routeCount" class="small"></p>
+<p class="guide" id="guide"></p><p>計測する語：<strong id="term"></strong>（この語は1回だけ発話）</p>
+<label><input id="consent" type="checkbox"> テスト音声をローカル保存する。個人情報や秘密情報を話さない。</label>
+<button class="primary" id="start">● 録音開始</button><button id="stop" disabled>■ 停止</button><button id="save" disabled>保存して次へ</button>
+<div class="status" id="status">待機中</div><div id="error"></div><div class="small" id="liveState"></div><audio id="pending" controls hidden></audio>
+</div>
+<div class="card"><h2>2. 録音を聞いて、文章だけ確認</h2><p class="small">再生して、下書きの違う部分だけ直してください。「えー」「そのー」なども残します。語の細かな位置は、後から確認できます。</p>
+<select id="takes"><option value="">保存した音声を選択</option></select>
+<div id="review" hidden><audio id="player" controls></audio><p id="draftStatus" class="small"></p>
+<label>聞こえた全文<textarea id="reference"></textarea></label>
+<p class="small">再生して文章を確認・修正してから、下の「聞いて確認した文章を保存して次へ」を押してください。</p>
+<details><summary>重要語の位置を確認する（文章だけ保存する場合は不要）</summary><canvas id="wave" width="1600" height="220"></canvas>
+<p class="small">波形をクリックすると、その位置の秒数が下に表示されます。再生で語の境界を確かめ、開始・終了を設定してください。</p>
+<p id="cursor">位置：—</p><div class="row"><button id="markStart">この位置を語の開始に</button><button id="markEnd">この位置を語の終了に</button><button id="playSpan">語の区間を再生</button></div>
+<label>重要語 <input id="keyword"></label>
+<div class="row"><label>開始（秒）<input id="from" type="number" min="0" step="0.01"></label><label>終了（秒）<input id="to" type="number" min="0" step="0.01"></label></div>
+<label><input id="timingConfirmed" type="checkbox"> 重要語の始まり・終わりの位置も、再生して確認した</label></details><button class="primary" id="reviewSave">聞いて確認した文章を保存して次へ</button><span id="reviewStatus"></span></div>
+<p id="count"></p></div>
+<script>
+const $=id=>document.getElementById(id);let state,takeIds='',selected='',samples=null,duration=0,cursor=0,spanTimer,peak=1,usedDraft=false;
+async function api(path,data){const r=await fetch('/api/'+path,{method:'POST',headers:{'Content-Type':'application/json','X-Study-Request':'1'},body:JSON.stringify(data||{})});const d=await r.json();if(!r.ok)throw Error(d.error);return d}
+function guide(){const p=state.plan.tests.find(t=>t.test_id===$('prompt').value);$('guide').textContent=p.guide;$('term').textContent=p.keyword}
+async function refresh(){try{state=await(await fetch('/api/state')).json();const total=state.plan.tests.length;if(!$('prompt').options.length){state.plan.tests.forEach((p,i)=>{const o=new Option(`${i+1}/${total} · ${p.condition}`,p.test_id);$('prompt').add(o)});guide()}
+const meeting=$('route').value!=='direct_mic',savedOnRoute=state.takes.filter(t=>t.route===$('route').value).length;
+$('routeCount').textContent=`この経路の保存済み録音: ${savedOnRoute} 件`+(meeting?'（会議アプリの相手側音声をループバックで取得）':'');
+$('start').disabled=state.busy||!$('consent').checked||(meeting&&state.live_state!=='off'&&!['ready','complete'].includes(state.live_state));$('stop').disabled=!state.busy;$('save').disabled=!state.ready||state.busy;$('prompt').disabled=state.busy;$('route').disabled=state.busy;
+$('status').textContent=state.recording?'録音中 — 話し終わったら停止':state.busy?'マイク準備中…':state.ready?`録音完了（${state.duration_s.toFixed(1)}秒）。聞き直して保存できます。`:'待機中';$('error').textContent=state.error||state.live_error||'';$('liveState').textContent=state.live_state==='off'?'':({loading:'会議音声用のローカル認識モデルを準備中…',ready:'会議音声のリアルタイム認識が利用できます',recording:'会議音声を認識中',complete:'会議音声の認識が完了しました',error:'ローカル認識でエラーが発生しました'}[state.live_state]||'');
+if(state.ready&&!$('pending').hasAttribute('src')){$('pending').src='/audio/pending.wav?t='+Date.now();$('pending').hidden=false}if(!state.ready){$('pending').removeAttribute('src');$('pending').hidden=true}
+const ids=state.takes.map(t=>t.test_id).join('|');if(ids!==takeIds){takeIds=ids;const prior=$('takes').value;$('takes').replaceChildren(new Option('保存した音声を選択',''));state.takes.forEach((t,i)=>$('takes').add(new Option(`${i+1} · ${t.condition} · ${t.route}`,t.test_id)));$('takes').value=prior}
+$('count').textContent=`保存 ${state.takes.length} 件 ／ 正解文確認済み ${state.takes.filter(t=>t.reference_review==='verified').length} 件`;
+}catch(e){$('error').textContent='状態の取得に失敗しました'}}
+$('prompt').onchange=guide;$('consent').onchange=refresh;$('route').onchange=refresh;
+$('start').onclick=async()=>{try{$('pending').pause();await api('start',{prompt_id:$('prompt').value,route:$('route').value,consent_local_test_recording:$('consent').checked});await refresh()}catch(e){$('error').textContent=e.message}};
+$('stop').onclick=()=>api('stop');$('save').onclick=async()=>{try{await api('save');$('prompt').selectedIndex=Math.min($('prompt').selectedIndex+1,state.plan.tests.length-1);guide();await refresh()}catch(e){$('error').textContent=e.message}};
+function draw(){if(!samples)return;const c=$('wave'),x=c.getContext('2d');x.clearRect(0,0,c.width,c.height);x.strokeStyle='#88bef8';x.beginPath();for(let p=0;p<c.width;p++){const a=Math.floor(p*samples.length/c.width),b=Math.max(a+1,Math.floor((p+1)*samples.length/c.width));let lo=0,hi=0;for(let j=a;j<b;j++){lo=Math.min(lo,samples[j]);hi=Math.max(hi,samples[j])}x.moveTo(p,c.height/2-lo*c.height*.46/peak);x.lineTo(p,c.height/2-hi*c.height*.46/peak)}x.stroke();x.strokeStyle='#f8bc69';x.beginPath();x.moveTo(cursor/duration*c.width,0);x.lineTo(cursor/duration*c.width,c.height);x.stroke()}
+$('takes').onchange=async()=>{const t=state.takes.find(t=>t.test_id===$('takes').value);$('review').hidden=!t;if(!t)return;selected=t.test_id;$('player').src='/audio/'+selected+'.wav';usedDraft=Boolean(t.review_draft)&&t.reference_review==='unreviewed';$('reference').value=t.reference_review==='unreviewed'?(t.review_draft?.text??''):t.reference_text;$('draftStatus').textContent=usedDraft?'自動認識の下書きです。間違いや省略があれば直してください。語の位置は自動推定で、未確認です。':t.reference_review==='verified'?'確認済みの文章です。':'下書きを準備中です。今は録音だけ進められます。';$('keyword').value=t.keywords[0];const a=t.keyword_annotation.spans[0]??t.review_draft?.keyword_span;$('from').value=a?.start_s??'';$('to').value=a?.end_s??'';$('timingConfirmed').checked=false;$('reviewStatus').textContent='';const ctx=new AudioContext();const buf=await ctx.decodeAudioData(await(await fetch('/audio/'+selected+'.wav')).arrayBuffer());samples=buf.getChannelData(0).slice();peak=.001;for(const v of samples)peak=Math.max(peak,Math.abs(v));duration=buf.duration;await ctx.close();cursor=0;draw()};
+$('wave').onclick=e=>{cursor=Math.max(0,Math.min(duration,(e.clientX-e.target.getBoundingClientRect().left)/e.target.getBoundingClientRect().width*duration));$('cursor').textContent='位置：'+cursor.toFixed(3)+'秒';$('player').currentTime=cursor;draw()};
+$('markStart').onclick=()=>{$('from').value=cursor.toFixed(3)};$('markEnd').onclick=()=>{$('to').value=cursor.toFixed(3)};
+$('playSpan').onclick=()=>{clearTimeout(spanTimer);const a=Number($('from').value),b=Number($('to').value);if(b>a){$('player').currentTime=Math.max(0,a-.15);$('player').play();spanTimer=setTimeout(()=>$('player').pause(),(b-a+.3)*1000)}};
+$('reviewSave').onclick=async()=>{try{await api('review',{test_id:selected,reference_text:$('reference').value,keyword:$('keyword').value,start_s:Number($('from').value),end_s:Number($('to').value),confirmed:true,timing_confirmed:$('timingConfirmed').checked,used_draft:usedDraft});await refresh();const next=state.takes.find(t=>t.reference_review!=='verified');if(next){$('takes').value=next.test_id;await $('takes').onchange()}$('reviewStatus').textContent='保存しました'}catch(e){$('reviewStatus').textContent='保存できませんでした。文章が空欄でないか確認してください。語の位置のチェックは、開始・終了も指定できた場合だけ入れます。'}};
+refresh();setInterval(refresh,1000);
+</script></html>

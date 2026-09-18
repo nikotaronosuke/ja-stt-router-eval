@@ -1,0 +1,103 @@
+{
+  "schema_version": 1,
+  "instructions": "公開用の汎用音声テスト例です。自分の言葉で話し、個人情報や私的な文章は含めないでください。過去の評価音声の台本ではありません。",
+  "tests": [
+    {
+      "test_id": "natural_normal_1",
+      "condition": "normal",
+      "guide": "普通の声で、青い箱が棚にいくつあるかを尋ねてください。最後に「在庫確認」を一度だけ入れてください。",
+      "keyword": "在庫確認"
+    },
+    {
+      "test_id": "natural_normal_2",
+      "condition": "normal",
+      "guide": "普通の声で、SharePointという製品名を一度入れて、画面の見方を尋ねてください。",
+      "keyword": "SharePoint"
+    },
+    {
+      "test_id": "natural_quiet_1",
+      "condition": "quiet",
+      "guide": "小声で、棚の青い箱について尋ね、「在庫確認」を一度入れてください。",
+      "keyword": "在庫確認"
+    },
+    {
+      "test_id": "natural_quiet_2",
+      "condition": "quiet",
+      "guide": "小声で、SharePointの画面の見方を尋ねてください。",
+      "keyword": "SharePoint"
+    },
+    {
+      "test_id": "natural_mumbled_1",
+      "condition": "mumbled",
+      "guide": "自然にボソボソと、棚の箱について尋ね、「在庫確認」を一度入れてください。",
+      "keyword": "在庫確認"
+    },
+    {
+      "test_id": "natural_mumbled_2",
+      "condition": "mumbled",
+      "guide": "自然にボソボソと、SharePointの画面の見方を尋ねてください。",
+      "keyword": "SharePoint"
+    },
+    {
+      "test_id": "natural_fast_1",
+      "condition": "fast",
+      "guide": "普段より早口で、棚の箱について尋ね、「在庫確認」を一度入れてください。",
+      "keyword": "在庫確認"
+    },
+    {
+      "test_id": "natural_fast_2",
+      "condition": "fast",
+      "guide": "普段より早口で、SharePointの画面の見方を尋ねてください。",
+      "keyword": "SharePoint"
+    },
+    {
+      "test_id": "natural_hesitation_1",
+      "condition": "hesitation",
+      "guide": "考える間と言い直しを交えて、明日の「天気予報」を尋ねてください。",
+      "keyword": "天気予報"
+    },
+    {
+      "test_id": "natural_hesitation_2",
+      "condition": "hesitation",
+      "guide": "考える間と言い直しを交えて、「生成AI」という用語の読み方を尋ねてください。",
+      "keyword": "生成AI"
+    },
+    {
+      "test_id": "natural_filler_1",
+      "condition": "filler",
+      "guide": "「えー」「そのー」を交えて、図書館の「開館時間」を尋ねてください。",
+      "keyword": "開館時間"
+    },
+    {
+      "test_id": "natural_filler_2",
+      "condition": "filler",
+      "guide": "「えーと」「あの」を交えて、駅の「時刻表」を尋ねてください。",
+      "keyword": "時刻表"
+    },
+    {
+      "test_id": "natural_long_1",
+      "condition": "long",
+      "guide": "20〜28秒程度で架空の部屋の片付け方を説明し、最後に箱の数を「数字」で尋ねてください。",
+      "keyword": "数字"
+    },
+    {
+      "test_id": "natural_long_2",
+      "condition": "long",
+      "guide": "20〜28秒程度で架空の買い物の予定を説明し、最後に品物を揃える「優先順位」を尋ねてください。",
+      "keyword": "優先順位"
+    },
+    {
+      "test_id": "natural_names_1",
+      "condition": "proper_noun",
+      "guide": "製品名の発音テストです。「SharePoint」を一度入れて、ファイルの開き方を尋ねてください。",
+      "keyword": "SharePoint"
+    },
+    {
+      "test_id": "natural_numbers_1",
+      "condition": "numbers",
+      "guide": "数字の発音テストです。進み具合の例として「25パーセント」を一度だけ話してください。",
+      "keyword": "25パーセント"
+    }
+  ],
+  "dataset_role": "public_neutral_examples"
+}

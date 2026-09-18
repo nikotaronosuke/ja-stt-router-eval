@@ -1,0 +1,11 @@
+{
+ "dataset": "ja-router-eval-v1",
+ "sealed_on": "2026-09-19",
+ "candidates": 16,
+ "questions": 242,
+ "files": {
+  "candidates.json": "e1c46dcb21c2bb3444f79bb96bf1b7200bd4e056e03fdbc498282d5e731a9dde",
+  "questions.json": "b7dda450153e8ea5f480c0427b5d7e4738390e391f41f67b0276031ad5b0fbe8"
+ },
+ "note": "Sealed before any provider comparison. Do not edit the fixture after a provider run; a changed fixture is a new dataset and earlier results do not compare to it."
+}

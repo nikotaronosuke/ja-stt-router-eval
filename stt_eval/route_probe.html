@@ -1,0 +1,20 @@
+<!doctype html><html lang="ja"><meta charset="utf-8"><title>PCの音声経路の確認</title>
+<style>body{font:18px/1.7 system-ui,sans-serif;max-width:760px;margin:40px auto;padding:0 24px;background:#111824;color:#e9effa}h1{font-size:28px}.box{border:1px solid #60718a;padding:24px;border-radius:12px}button{font:inherit;padding:12px 20px;margin:16px 12px 0 0}label{display:block;margin-top:22px}#status{font-weight:bold;color:#9cdfba}.red{color:#ffb7ad}button:disabled{opacity:.4}</style>
+<h1>PCの音声経路を確認</h1>
+<div class="box"><p>合成音声5件を約30秒かけて再生し、PCが受け取った音と元の音を比較します。音声・認識全文は保存せず、数値だけをPC内に残します。外部送信はありません。</p>
+<p>再生後は音声認識の準備と比較が続きます。全体の目安は5〜7分です。画面共有や会議への参加は不要です。</p>
+<p class="red">音楽・動画・通知読み上げ・別の通話を止めてください。合成音以外が混ざったら「中止」を押してください。</p>
+<label><input id="consent" type="checkbox"> 他の再生音がないことを確認し、今回の音声取得を許可します。</label>
+<button id="start" disabled>合成音声を再生して開始</button><button id="stop" disabled>中止</button>
+<p id="status">待機中 — まだ音声を取得していません</p><p id="detail"></p></div>
+<script>
+const $=id=>document.getElementById(id);let busy=false;
+async function post(path,data={}){const r=await fetch('/api/'+path,{method:'POST',headers:{'Content-Type':'application/json','X-Study-Request':'1'},body:JSON.stringify(data)});if(!r.ok)throw Error();return r.json()}
+$('consent').onchange=()=>{$('start').disabled=busy||!$('consent').checked};
+$('start').onclick=async()=>{try{$('start').disabled=true;await post('start',{consent_local_test_recording:$('consent').checked});await refresh()}catch(e){$('status').textContent='開始できませんでした。再生・取得は停止しています。'}};
+$('stop').onclick=async()=>{await post('stop');$('status').textContent='停止しています…'};
+const labels={idle:'待機中 — まだ音声を取得していません',preparing:'準備中',capturing:'音声を取得中 — 合成音以外が混ざったら中止',scoring:'再生終了 — PC内で認識結果を比較中',complete:'比較終了 — 音声取得は停止しました',incomplete:'音声取得は終了しましたが、認識比較は完了していません',cancelled:'中止しました',error:'エラーのため停止しました'};
+async function refresh(){try{const r=await fetch('/api/state');if(!r.ok)throw Error();const s=await r.json();busy=s.busy;$('status').textContent=labels[s.phase]??'状態を確認中';$('detail').textContent=`再生 ${s.completed}/5件 · 音声保存なし · 外部送信なし`;$('start').disabled=busy||!$('consent').checked||s.phase==='complete';$('stop').disabled=!busy}catch(e){$('status').textContent='接続が切れました。画面を開き直してください。'}}
+addEventListener('pagehide',()=>{if(busy)fetch('/api/stop',{method:'POST',headers:{'Content-Type':'application/json','X-Study-Request':'1'},body:'{}',keepalive:true})});
+refresh();setInterval(refresh,1000);
+</script></html>

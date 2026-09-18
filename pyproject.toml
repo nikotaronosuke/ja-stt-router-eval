@@ -1,0 +1,37 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "ja-stt-router-eval"
+version = "0.1.0"
+description = "Evaluation harness for Japanese speech recognition and LLM routing on Windows"
+readme = "README.md"
+license = "MIT"
+license-files = ["LICENSE"]
+requires-python = ">=3.12"
+dependencies = [
+    "numpy>=2.0",
+    "scipy>=1.14",
+    "psutil>=6.0",
+]
+
+[project.optional-dependencies]
+# Live capture and the hosted STT engine. PyAudioWPatch provides WASAPI loopback and
+# only exists for Windows; websockets carries the transcription session.
+stt = [
+    "websockets>=13.0",
+    "PyAudioWPatch>=0.2.12; sys_platform == 'win32'",
+]
+test = [
+    "pytest>=8.0",
+]
+
+[tool.setuptools]
+packages = ["router_eval", "stt_eval"]
+
+[tool.setuptools.package-data]
+stt_eval = ["*.html"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]

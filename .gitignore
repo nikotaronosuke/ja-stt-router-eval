@@ -1,0 +1,70 @@
+# Local environments, caches and downloaded runtimes
+.venv*/
+.cache/
+.tools/
+models/
+__pycache__/
+*.pyc
+*.egg-info/
+build/
+dist/
+
+# Measurement output stays local. The fixtures and the runners are the shared asset.
+artifacts/
+
+# Audio, manifests that point at audio, and anything recorded locally
+fixtures/audio/
+fixtures/manifests/
+*.wav
+*.flac
+*.mp3
+*.m4a
+*.ogg
+*.webm
+*.mp4
+*.pcm
+
+# Raw logs and per-run records
+*.jsonl
+*.csv
+*.tsv
+*.log
+logs/
+recordings/
+transcripts/
+private/
+personal/
+
+# Credentials
+.env*
+*.key
+*.pem
+*.p12
+*.pfx
+
+# Model and binary formats are never committed
+*.nemo
+*.pt
+*.pth
+*.ckpt
+*.onnx
+*.safetensors
+*.gguf
+*.bin
+*.exe
+*.dll
+*.zip
+*.tar
+*.gz
+*.bz2
+*.7z
+
+# Documents that could carry personal material
+*.doc
+*.docx
+*.pdf
+*.xlsx
+*.pptx
+
+# Machine-specific shortcuts
+*.lnk
