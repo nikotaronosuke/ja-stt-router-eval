@@ -87,7 +87,7 @@ expected_ids / acceptable_ids / should_abstain / notes
 
 ### 作成の経緯（provenance）
 
-この評価セットは、面接専用だった旧評価セットの構造（10 カテゴリとその件数、5 分類、
+この評価セットは、別の題材で作られていた旧評価セットの構造（10 カテゴリとその件数、5 分類、
 `expected_ids` / `acceptable_ids` / `should_abstain` / `notes` というラベル項目）を、
 AI モデル（Claude、Claude Code 経由）が架空の市民センター案内デスクという別ドメインへ
 移植して作成したものです。発話・候補・関連語・ラベル・notes はすべてモデルが生成し、
