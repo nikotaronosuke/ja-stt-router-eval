@@ -1,5 +1,7 @@
 # Owner Decision Log
 
+日本語 | [English](OWNER_DECISIONS.en.md)
+
 Japanese STT & LLM Router Evaluation は、モデルのランキングを作るためのリポジトリではありません。
 
 本体へ組み込む前に、**日本語音声認識と「短い発話 → 候補ID」のルーティングを、
