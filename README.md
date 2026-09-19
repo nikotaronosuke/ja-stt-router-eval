@@ -39,7 +39,7 @@ Two evaluation tracks share the same rule: **measure failures explicitly instead
 
 ## Design principles
 
-> **Why these rules exist:** [Owner Decision Log](docs/OWNER_DECISIONS.md) *(Japanese)* — why abstention, sealed fixtures, missing-value handling, privacy gates, and evaluation boundaries were chosen.
+> **Why these rules exist:** [Owner Decision Log](docs/OWNER_DECISIONS.en.md) — why abstention, sealed fixtures, missing-value handling, privacy gates, and evaluation boundaries were chosen.
 
 - abstain is a valid result
 - wrong selection is measured separately
