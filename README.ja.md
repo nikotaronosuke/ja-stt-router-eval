@@ -5,6 +5,18 @@
 Windows 上で、日本語音声認識（STT）と「短い発話 → 限定された候補IDのいずれか」への
 ルーティングを、再現可能な条件で評価するための実験用リポジトリです。
 
+```mermaid
+flowchart LR
+    A["日本語音声"] --> S["STT評価ハーネス"]
+    S --> M["CER / 重要語回収<br/>遅延 / 修正回数 / 負荷"]
+
+    Q["短い日本語発話"] --> R["Router契約"]
+    R --> D["候補ID<br/>または abstain"]
+    D --> E["expected / acceptable<br/>wrong display / safe miss"]
+```
+
+2つの評価に共通する方針は、**失敗の種類を1つのaccuracyへ隠さず、別々に測ること**です。
+
 ## 評価するもの
 
 ### 音声認識
