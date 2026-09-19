@@ -26,6 +26,8 @@ Windows 上で、日本語音声認識（STT）と「短い発話 → 限定さ�
 
 ## 設計原則
 
+> **なぜこの評価設計にしたか:** [Owner Decision Log](docs/OWNER_DECISIONS.md) — abstain、wrong display、欠測、fixture封印、privacy、再現可能性の境界をどう決めたかをまとめています。
+
 - abstain（何も選ばない）は正式な結果として扱う
 - 誤った選択は独立した指標として測る
 - provider のスコアを校正済みの確率とはみなさない
