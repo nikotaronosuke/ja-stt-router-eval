@@ -452,7 +452,7 @@ repoとしては分かりやすくなります。
 - model version
 - pricing
 - prompt version
--実行日
+- 実行日
 
 に依存して変わります。
 
