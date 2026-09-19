@@ -27,6 +27,8 @@ reproducible conditions.
 
 ## Design principles
 
+> **Why these rules exist:** [Owner Decision Log](docs/OWNER_DECISIONS.md) *(Japanese)* — why abstention, sealed fixtures, missing-value handling, privacy gates, and evaluation boundaries were chosen.
+
 - abstain is a valid result
 - wrong selection is measured separately
 - provider scores are not treated as calibrated probabilities
