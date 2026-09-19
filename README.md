@@ -6,6 +6,18 @@ An experimental repository for evaluating Japanese speech recognition (STT) and
 "short utterance → one of a closed set of candidate ids" routing on Windows under
 reproducible conditions.
 
+```mermaid
+flowchart LR
+    A["Japanese audio"] --> S["STT harness"]
+    S --> M["CER / keyword recall<br/>latency / revisions / resources"]
+
+    Q["Short Japanese utterance"] --> R["Router contract"]
+    R --> D["Candidate ID<br/>or abstain"]
+    D --> E["expected / acceptable<br/>wrong display / safe miss"]
+```
+
+Two evaluation tracks share the same rule: **measure failures explicitly instead of hiding them inside one accuracy number.**
+
 ## What this evaluates
 
 ### Speech recognition
