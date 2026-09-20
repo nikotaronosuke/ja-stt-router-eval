@@ -38,8 +38,6 @@ flowchart LR
 
 ## 設計原則
 
-> **なぜこの評価設計にしたか:** [Owner Decision Log](docs/OWNER_DECISIONS.md) — abstain、wrong display、欠測、fixture封印、privacy、再現可能性の境界をどう決めたかをまとめています。
-
 - abstain（何も選ばない）は正式な結果として扱う
 - 誤った選択は独立した指標として測る
 - provider のスコアを校正済みの確率とはみなさない
@@ -75,6 +73,7 @@ hosted エンジンには `OPENAI_API_KEY` の API キー、明示的な予算�
 
 ## ドキュメント
 
+- [docs/design-decisions.md](docs/design-decisions.md) — 評価設計の主要判断と公開根拠を後から整理した記録
 - [docs/methodology.md](docs/methodology.md) — 指標の定義、公平性の規則、数値が意味するものと意味しないもの
 - [docs/stt-evaluation.md](docs/stt-evaluation.md) — STT ハーネスの過去実測と、その条件
 - [docs/router-evaluation.md](docs/router-evaluation.md) — ルーティング評価セット、ランナー、keyword baseline

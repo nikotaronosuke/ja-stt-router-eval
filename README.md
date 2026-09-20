@@ -39,8 +39,6 @@ Two evaluation tracks share the same rule: **measure failures explicitly instead
 
 ## Design principles
 
-> **Why these rules exist:** [Owner Decision Log](docs/OWNER_DECISIONS.en.md) — why abstention, sealed fixtures, missing-value handling, privacy gates, and evaluation boundaries were chosen.
-
 - abstain is a valid result
 - wrong selection is measured separately
 - provider scores are not treated as calibrated probabilities
@@ -77,6 +75,7 @@ The STT harness needs the Windows and WSL environments described in
 
 ## Documentation
 
+- [docs/design-decisions.en.md](docs/design-decisions.en.md) — retrospective summary of key evaluation-design decisions and their public evidence
 - [docs/methodology.md](docs/methodology.md) — definitions, fairness rules, what a number may and may not mean
 - [docs/stt-evaluation.md](docs/stt-evaluation.md) — historical measurements of the STT harness, with their conditions
 - [docs/router-evaluation.md](docs/router-evaluation.md) — the routing evaluation set, the runner, and the keyword baseline
