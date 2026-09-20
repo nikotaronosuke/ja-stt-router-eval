@@ -4,15 +4,7 @@ English | [日本語](design-decisions.md)
 
 This document was organized retrospectively on 2026-09-20 from existing public commits, the evaluation methodology, and the sealed-fixture documentation. It is not a contemporaneous decision log. Each item is limited to claims that can be checked against the linked public material.
 
-## 1. Split the evaluation harness out before product integration
-
-Putting STT or routing directly into a product would mix UI behavior, audio path, prompts, network effects, and hardware load.
-
-The evaluation repository was therefore created first so candidate approaches could be compared with common inputs and common metrics before product integration.
-
-**Evidence:** [initial harness](https://github.com/nikotaronosuke/ja-stt-router-eval/commit/d0b81f0fe35ba9dc0591f37e1a31eab96132a5a6)
-
-## 2. Treat wrong display as worse than a safe miss
+## 1. Treat wrong display as worse than a safe miss
 
 A single accuracy number would make "show nothing" and "show the wrong candidate" look like the same kind of error.
 
@@ -28,7 +20,7 @@ and reports `wrong_display_rate` separately as a primary metric.
 
 **Evidence:** [fixture README](../fixtures/router-eval-v1/README.md#判定の5分類)
 
-## 3. Seal the fixture before provider comparison
+## 2. Seal the fixture before provider comparison
 
 Changing utterances or labels after seeing provider results would let the benchmark drift toward those results.
 
@@ -36,7 +28,7 @@ SHA-256 values for `candidates.json` and `questions.json` are therefore recorded
 
 **Evidence:** [fixture seal](../fixtures/router-eval-v1/README.md#封印seal)
 
-## 4. Publicly correct the misleading hand-labelled description
+## 3. Publicly correct the misleading hand-labelled description
 
 After the initial publication, the fixture documentation was found to imply that the gold labels had been assigned manually.
 
@@ -46,7 +38,7 @@ The sealed fixture itself was kept unchanged so the dataset would not silently c
 
 **Evidence:** [provenance correction](https://github.com/nikotaronosuke/ja-stt-router-eval/commit/eef45514db141fa48020c7a9e27f35c239484124) / [fixture provenance](../fixtures/router-eval-v1/README.md#作成の経緯provenance)
 
-## 5. Keep missing measurements missing, and label non-reproducible history honestly
+## 4. Keep missing measurements missing, and label non-reproducible history honestly
 
 If a trial has no first partial, recording it as 0 ms would turn "not observed" into "arrived instantly."
 
